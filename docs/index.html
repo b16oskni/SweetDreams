@@ -9,7 +9,7 @@
         <style>
             div {border-style: solid; border-color: brown; border-width: 2px;}
             body {background-color: #375261;}
-            #main {background-image: url("showSelect.png"); background-repeat: no-repeat; background-size: cover; }
+            #main {background-image: url("../assets/showSelect.png"); background-repeat: no-repeat; background-size: cover; }
         </style>
     </head>
     <body>
@@ -17,10 +17,6 @@
         </div>
         <script>
             window.onload = function () {
-                let c = document.getElementById("canvas");
-                let ctx = c.getContext("2d");
-                let img = document.getElementById("showSelectImg");
-                ctx.drawImage(img, 0,0);
             }
             function click() {
                 alert("You clicked me!");
