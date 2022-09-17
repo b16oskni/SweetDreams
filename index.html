@@ -10,10 +10,16 @@
             div {border-style: solid; border-color: brown; border-width: 2px;}
             body {background-color: #375261;}
             #main {background-image: url("assets/showSelect.png"); background-repeat: no-repeat; background-size: cover; }
+            #family {bottom: 0px; left: 0px;}
+            #bob {bottom: 0px; left: 500px;}
+            #cleveland {bottom: 0px; right: 0px;}
         </style>
     </head>
     <body>
         <div id="main" class="container-fluid" style="height: 100vh;">
+            <div id="family" class="position-absolute"></div>
+            <div id="bob"></div>
+            <div id="cleveland"></div>
         </div>
         <script>
             window.onload = function () {
