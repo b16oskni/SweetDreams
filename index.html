@@ -6,6 +6,7 @@
         <title>Sweet Dreams</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
         <style>
             /*div {border-style: solid; border-color: brown; border-width: 2px;}*/
             body {background-color: #375261;}
@@ -14,6 +15,13 @@
             #bob {bottom: 0px; left: 33vw; height: 470px; width: 560px;}
             #cleveland {bottom: 0px; right: 0px; height: 420px; width: 400px;}
             #selectMain {z-index:100;background-repeat: no-repeat; background-size: cover;}
+            #exampleModalCenter {display: none;}
+            #exampleModalBody, .modal-header, .modal-footer {background-color: #41354d; border: none; color: white;}
+            #exampleModalLongTitle {font-weight: bold;}
+            #modalBodyHeader { font-weight: bold;}
+            #modalBodyPlot {border: 1px solid black; width: 75%; background-color: #332b3b;margin: auto; margin-top: 10px;}
+            #modalBtn {margin:auto; background-color: #332b3b;}
+            #modalBodyImg {border: 2px solid black;}
         </style>
     </head>
     <body>
@@ -24,18 +32,43 @@
                 <div id="cleveland" class="position-absolute"></div>
             </div>
         </div>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                </div>
+                <div class="modal-body text-center" id="exampleModalBody">
+                    <p id="modalBodyHeader"></p>
+                    <img id="modalBodyImg" src="" style="width: 75%;">
+                    <p id="modalBodyPlot"></p>
+                </div>
+                <div class="modal-footer">
+                  <button id="modalBtn" type="button" class="btn btn-dark">Good Night</button>
+                </div>
+              </div>
+            </div>
+          </div>
         <script>
+            let seasons = [];
+            let randomEpisode = [];
+            const modalElement = document.getElementById('exampleModalCenter');
+            
             window.onload = function () {
-                let selectFamily = document.getElementById('family');
-                let selectBob = document.getElementById('bob');
-                let selectCleveland = document.getElementById('cleveland');
-                let selectBg = document.getElementById('selectMain');
-                let seasons;
-                let imdbFamily = 'tt0182576';
-                let imdbBob = 'tt1561755';
-                let imdbCleveland = 'tt1195935';
+                const selectFamily = document.getElementById('family');
+                const selectBob = document.getElementById('bob');
+                const selectCleveland = document.getElementById('cleveland');
+                const selectBg = document.getElementById('selectMain');
+                const imdbFamily = 'tt0182576';
+                const imdbBob = 'tt1561755';
+                const imdbCleveland = 'tt1195935';
 
                 document.getElementById('main').style.backgroundImage = "url('assets/showSelect.png')";
+
+                //CLOSE MODAL
+                document.getElementById('modalBtn').addEventListener('click', (event) => {
+                    $("#exampleModalCenter").modal("toggle");
+                });
 
                 //FAMILY GUY EVENTS
                 selectFamily.addEventListener('mouseover', (event) => {
@@ -45,13 +78,7 @@
                     selectBg.style.backgroundImage = "";
                 });
                 selectFamily.addEventListener('click', (event) => {
-                    fetch('https://imdb-api.com/en/API/Title/k_wcrrahm3/tt0182576')
-                        .then((response) => response.json())
-                        .then((data) => { if (data.tvSeriesInfo !== null) {
-                            seasons = data.tvSeriesInfo.seasons;
-                            console.log(seasons);
-                        }});
-                    randomiseEpisode(seasons, imdbFamily);
+                    getData("https://imdb-api.com/en/API/Title/k_pkixmotc/tt0182576", imdbFamily);
                 });
                 //BOBS BURGER EVENTS
                 selectBob.addEventListener('mouseover', (event) => {
@@ -61,13 +88,7 @@
                     selectBg.style.backgroundImage = "";
                 });
                 selectBob.addEventListener('click', (event) => {
-                    fetch('https://imdb-api.com/en/API/Title/k_wcrrahm3/tt1561755')
-                        .then((response) => response.json())
-                        .then((data) => { if (data.tvSeriesInfo !== null) {
-                            seasons = data.tvSeriesInfo.seasons;
-                            console.log(seasons);
-                        }});
-                    randomiseEpisode(seasons, imdbBob);
+                    getData("https://imdb-api.com/en/API/Title/k_pkixmotc/tt1561755", imdbBob);
                 });
                 //CLEVELAND EVENTS
                 selectCleveland.addEventListener('mouseover', (event) => {
@@ -77,18 +98,48 @@
                     selectBg.style.backgroundImage = "";
                 });
                 selectCleveland.addEventListener('click', (event) => {
-                    fetch('https://imdb-api.com/en/API/Title/k_wcrrahm3/tt1195935')
-                        .then((response) => response.json())
-                        .then((data) => { if (data.tvSeriesInfo !== null) {
-                            seasons = data.tvSeriesInfo.seasons;
-                            console.log(seasons);
-                        }});
-                    randomiseEpisode(seasons, imdbCleveland);
+                    getData("https://imdb-api.com/en/API/Title/k_pkixmotc/tt1195935", imdbCleveland);
                 });
             }
             function randomiseEpisode(seasons, imdbKey) {
-                //randomise season then fetch number of episodes through api
-                //then randomise episode number and render season number, episode number, title, image and plot
+                console.log("before check display");
+                if (modalElement.style.display != 'block') {
+                    //randomise season
+                    let randomSeason = getRandom(1, seasons.length);
+
+                    //fetch episodes for randomised season
+                    getData('https://imdb-api.com/en/API/SeasonEpisodes/k_pkixmotc/' + imdbKey + '/' + randomSeason)
+                }
+            }
+            async function getData(url, imdbKey) {
+                let response = await fetch(url);
+                let data = await response.json();
+                parseData(data, imdbKey);
+            }
+            function parseData(data, imdbKey) {
+                if (data.tvSeriesInfo != null) {
+                    seasons = data.tvSeriesInfo.seasons;
+                    randomiseEpisode(seasons, imdbKey);
+                }else if (data.episodes != null) {
+                    let episodes = data.episodes;
+                    let getRandomEpisode = getRandom(1, episodes.length);
+                    randomEpisode = data.episodes[getRandomEpisode];
+                    //call function to render results
+                    renderResult(randomEpisode);
+                }
+            }
+            function renderResult(episode) {
+                $("#exampleModalLongTitle").text(episode.title);
+                $("#modalBodyHeader").text("Season: " + episode.seasonNumber + " Episode: " + episode.episodeNumber);
+                $("#modalBodyPlot").text(episode.plot);
+                $("#modalBodyImg").attr("src", episode.image);
+                $("#exampleModalCenter").modal("toggle");
+               
+            }
+            function getRandom(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min) + min);
             }
         </script>
     </body>
