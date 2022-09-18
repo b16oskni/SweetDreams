@@ -28,30 +28,65 @@
             window.onload = function () {
                 let selectFamily = document.getElementById('family');
                 let selectBob = document.getElementById('bob');
-                let selectCleve = document.getElementById('cleveland');
+                let selectCleveland = document.getElementById('cleveland');
                 let selectBg = document.getElementById('selectMain');
+                let seasons;
+                let imdbFamily = 'tt0182576';
+                let imdbBob = 'tt1561755';
+                let imdbCleveland = 'tt1195935';
+
+                //FAMILY GUY EVENTS
                 selectFamily.addEventListener('mouseover', (event) => {
                     selectBg.style.backgroundImage = "url('assets/showSelectFamily.png')";
                 });
                 selectFamily.addEventListener('mouseleave', (event) => {
                     selectBg.style.backgroundImage = "";
                 });
+                selectFamily.addEventListener('click', (event) => {
+                    fetch('https://imdb-api.com/en/API/Title/k_wcrrahm3/tt0182576')
+                        .then((response) => response.json())
+                        .then((data) => { if (data.tvSeriesInfo !== null) {
+                            seasons = data.tvSeriesInfo.seasons;
+                            console.log(seasons);
+                        }});
+                    randomiseEpisode(seasons, imdbFamily);
+                });
+                //BOBS BURGER EVENTS
                 selectBob.addEventListener('mouseover', (event) => {
                     selectBg.style.backgroundImage = "url('assets/showSelectBob.png')";
                 });
                 selectBob.addEventListener('mouseleave', (event) => {
                     selectBg.style.backgroundImage = "";
                 });
-                selectCleve.addEventListener('mouseover', (event) => {
+                selectBob.addEventListener('click', (event) => {
+                    fetch('https://imdb-api.com/en/API/Title/k_wcrrahm3/tt1561755')
+                        .then((response) => response.json())
+                        .then((data) => { if (data.tvSeriesInfo !== null) {
+                            seasons = data.tvSeriesInfo.seasons;
+                            console.log(seasons);
+                        }});
+                    randomiseEpisode(seasons, imdbBob);
+                });
+                //CLEVELAND EVENTS
+                selectCleveland.addEventListener('mouseover', (event) => {
                     selectBg.style.backgroundImage = "url('assets/showSelectCleveland.png')";
                 });
-                selectCleve.addEventListener('mouseleave', (event) => {
+                selectCleveland.addEventListener('mouseleave', (event) => {
                     selectBg.style.backgroundImage = "";
                 });
-
+                selectCleveland.addEventListener('click', (event) => {
+                    fetch('https://imdb-api.com/en/API/Title/k_wcrrahm3/tt1195935')
+                        .then((response) => response.json())
+                        .then((data) => { if (data.tvSeriesInfo !== null) {
+                            seasons = data.tvSeriesInfo.seasons;
+                            console.log(seasons);
+                        }});
+                    randomiseEpisode(seasons, imdbCleveland);
+                });
             }
-            function click() {
-                alert("You clicked me!");
+            function randomiseEpisode(seasons, imdbKey) {
+                //randomise season then fetch number of episodes through api
+                //then randomise episode number and render season number, episode number, title, image and plot
             }
         </script>
     </body>
