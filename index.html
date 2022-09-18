@@ -78,7 +78,7 @@
                     selectBg.style.backgroundImage = "";
                 });
                 selectFamily.addEventListener('click', (event) => {
-                    getData("https://imdb-api.com/en/API/Title/k_pkixmotc/tt0182576", imdbFamily);
+                    getData("https://imdb-api.com/en/API/Title/k_yqxdqh9u/tt0182576", imdbFamily);
                 });
                 //BOBS BURGER EVENTS
                 selectBob.addEventListener('mouseover', (event) => {
@@ -88,7 +88,7 @@
                     selectBg.style.backgroundImage = "";
                 });
                 selectBob.addEventListener('click', (event) => {
-                    getData("https://imdb-api.com/en/API/Title/k_pkixmotc/tt1561755", imdbBob);
+                    getData("https://imdb-api.com/en/API/Title/k_yqxdqh9u/tt1561755", imdbBob);
                 });
                 //CLEVELAND EVENTS
                 selectCleveland.addEventListener('mouseover', (event) => {
@@ -98,7 +98,7 @@
                     selectBg.style.backgroundImage = "";
                 });
                 selectCleveland.addEventListener('click', (event) => {
-                    getData("https://imdb-api.com/en/API/Title/k_pkixmotc/tt1195935", imdbCleveland);
+                    getData("https://imdb-api.com/en/API/Title/k_yqxdqh9u/tt1195935", imdbCleveland);
                 });
             }
             function randomiseEpisode(seasons, imdbKey) {
@@ -108,7 +108,7 @@
                     let randomSeason = getRandom(1, seasons.length);
 
                     //fetch episodes for randomised season
-                    getData('https://imdb-api.com/en/API/SeasonEpisodes/k_pkixmotc/' + imdbKey + '/' + randomSeason)
+                    getData('https://imdb-api.com/en/API/SeasonEpisodes/k_yqxdqh9u/' + imdbKey + '/' + randomSeason)
                 }
             }
             async function getData(url, imdbKey) {
