@@ -9,7 +9,7 @@
         <style>
             /*div {border-style: solid; border-color: brown; border-width: 2px;}*/
             body {background-color: #375261;}
-            #main {background-image: url("assets/showSelect.png"); background-repeat: no-repeat; background-size: cover; padding: 0; }
+            #main {background-repeat: no-repeat; background-size: cover; padding: 0; }
             #family {bottom: 0px; left: 7vw; height: 300px; width: 300px;}
             #bob {bottom: 0px; left: 33vw; height: 470px; width: 560px;}
             #cleveland {bottom: 0px; right: 0px; height: 420px; width: 400px;}
@@ -34,6 +34,8 @@
                 let imdbFamily = 'tt0182576';
                 let imdbBob = 'tt1561755';
                 let imdbCleveland = 'tt1195935';
+
+                document.getElementById('main').style.backgroundImage = "url('assets/showSelect.png')";
 
                 //FAMILY GUY EVENTS
                 selectFamily.addEventListener('mouseover', (event) => {
